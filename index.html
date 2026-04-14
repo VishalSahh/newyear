@@ -146,41 +146,52 @@ input {
   color: gold;
 }
 
-/* Canvas */
+/* CANVAS */
 canvas {
   position: absolute;
   top: 0;
   left: 0;
 }
 
-/* FINAL TEXT SCREEN */
+/* FINAL TEXT CENTER */
 #finalTextContainer {
   position: absolute;
-  bottom: 80px;
-  width: 100%;
-  max-height: 60vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 90%;
 }
 
 .final-line {
-  font-size: 16px;
+  font-size: 18px;
+  margin: 10px 0;
   opacity: 0;
-  transform: translateY(20px);
   animation: showLine 1s forwards;
 }
 
 @keyframes showLine {
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
-/* Footer */
+/* GUIDE BOX */
+#guide {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.1);
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  animation: fade 1s ease;
+}
+
+/* FOOTER */
 footer {
   position: fixed;
   bottom: 0;
@@ -188,103 +199,94 @@ footer {
   text-align: center;
   padding: 10px;
   font-size: 13px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
   background: rgba(0,0,0,0.3);
-}
-
-footer img {
-  width: 22px;
-  height: 15px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Loader -->
+<!-- GUIDE -->
+<div id="guide">👉 Click buttons step by step to enjoy the celebration 🎉</div>
+
+<!-- LOADER -->
 <div id="loader">
   <div class="spinner"></div>
 </div>
 
-<!-- Step 1 -->
+<!-- STEP 1 -->
 <section id="step1" class="section active">
   <h1 class="title" id="typing"></h1>
   <button onclick="nextStep(2)">Start Celebration 🎉</button>
 </section>
 
-<!-- Step 2 -->
+<!-- STEP 2 -->
 <section id="step2" class="section">
-  <h2>Enter Your beautiful Name 💖</h2>
+  <h2>Enter Your Name 💖</h2>
   <input type="text" id="username" placeholder="Your name...">
   <button onclick="saveName()">Continue</button>
 </section>
 
-<!-- Step 3 -->
+<!-- STEP 3 -->
 <section id="step3" class="section">
   <h1 id="countdown">3</h1>
 </section>
 
-<!-- Step 4 -->
+<!-- STEP 4 -->
 <section id="step4" class="section">
   <h2 id="message"></h2>
   <button onclick="nextStep(5)">Open Wishes 💌</button>
 </section>
 
-<!-- Step 5 -->
+<!-- STEP 5 -->
 <section id="step5" class="section cards">
 
   <div class="card" onclick="flip(this)">
     <div class="card-inner">
       <div class="card-front">💖 Love</div>
-      <div class="card-back">May your life always be filled with pure love and happiness 💕</div>
+      <div class="card-back">May your life always be full of love and happiness 💕</div>
     </div>
   </div>
 
   <div class="card" onclick="flip(this)">
     <div class="card-inner">
       <div class="card-front">🚀 Success</div>
-      <div class="card-back">This year brings all your dreams into reality 🌟</div>
+      <div class="card-back">All your dreams will come true this year 🌟</div>
     </div>
   </div>
 
   <div class="card" onclick="flip(this)">
     <div class="card-inner">
       <div class="card-front">🌿 Peace</div>
-      <div class="card-back">Stay calm, strong and peaceful in every situation 🍃</div>
+      <div class="card-back">Stay calm, strong and peaceful 🍃</div>
     </div>
   </div>
 
   <div class="card" onclick="flip(this)">
     <div class="card-inner">
       <div class="card-front">💰 Prosperity</div>
-      <div class="card-back">Wealth, growth and success will follow you always 💎</div>
+      <div class="card-back">Wealth and success will follow you 💎</div>
     </div>
   </div>
 
   <button onclick="startCelebration()">Final Celebration 🎆</button>
 </section>
 
-<!-- FINAL -->
+<!-- STEP 6 -->
 <section id="step6" class="section">
   <canvas id="fireworks"></canvas>
-
-  <h1 class="title">Happy Nepali New Year 🎉</h1>
 
   <div id="finalTextContainer"></div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Nepal.svg" alt="Nepal">
   Made with ❤️ by Vishal Guptaaa
 </footer>
 
 <!-- MUSIC -->
 <audio id="music" loop autoplay>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3">
 </audio>
 
 <script>
@@ -293,7 +295,7 @@ footer img {
 window.onload = () => {
   setTimeout(() => {
     document.getElementById("loader").style.display = "none";
-  }, 1200);
+  }, 1000);
 };
 
 // Typing
@@ -316,7 +318,7 @@ function nextStep(step){
   if(step === 3) startCountdown();
 }
 
-// Name
+// Save name
 let username = "Friend";
 function saveName(){
   username = document.getElementById("username").value || "Friend";
@@ -343,7 +345,7 @@ function startCountdown(){
 function showMessage(){
   nextStep(4);
   document.getElementById("message").innerHTML =
-    `💖 Dear ${username}, your future is bright and full of happiness ✨`;
+    `💖 Dear ${username}, your future is bright ✨`;
 }
 
 // Flip
@@ -351,19 +353,19 @@ function flip(card){
   card.classList.toggle("flip");
 }
 
-// FINAL CELEBRATION TEXT
+// FINAL CELEBRATION
 function startCelebration(){
   nextStep(6);
 
   let messages = [
-    "✨ This year brings endless happiness into your life",
-    "💖 May love and peace always stay with you",
-    "🚀 Success will follow every step you take",
-    "🌿 Stay strong, healthy and positive always",
-    "💰 Prosperity and growth are coming your way",
-    "🌈 All your dreams will slowly become reality",
+    "✨ This year brings unlimited happiness",
+    "💖 Love will fill your life every day",
+    "🚀 Success will follow your hard work",
+    "🌿 Stay healthy and positive always",
+    "💰 Prosperity and growth are coming",
+    "🎉 Your dreams will become reality",
     "🔥 Believe in yourself — you are powerful",
-    "🎉 Happy New Year 2083 to you and your family!"
+    "💫 Happy New Year 2083!"
   ];
 
   let container = document.getElementById("finalTextContainer");
@@ -377,7 +379,7 @@ function startCelebration(){
       container.appendChild(div);
       index++;
     }
-  }, 1500);
+  },1500);
 
   startFireworks();
 }
